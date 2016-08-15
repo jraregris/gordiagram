@@ -1,0 +1,2 @@
+# gordiagram
+simple wire mess
