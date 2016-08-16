@@ -11,11 +11,11 @@ ka6.view = { back:  "https://images-na.ssl-images-amazon.com/images/I/819%2BXigL
              front: "http://www.loopinsight.com/wp-content/uploads/NI_Komplete_Audio_6_Front.png" }
 
 ka6.io = [
-  { group: "input 1",
+  { group: "Input 1",
     io:
-      { id: "input1", plug: Neutrik.♀ },
-      { id: "input1.gain", plug: Pot.725, label: "Gain" },
-      { id: "Line/Inst", plug: Toggle, label: "█ Line / ▄ Inst" }
+      { plug: Neutrik.♀ },
+      { plug: Pot.725, label: "Gain" },
+      { plug: Toggle, label: "█ Line / ▄ Inst" }
     }
   ]
   
