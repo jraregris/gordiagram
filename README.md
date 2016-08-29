@@ -2,6 +2,11 @@
 simple wire mess
 
 
+
+## Define shit
+
+Define shit in text, as simply as possible
+
 ```ruby
 
 ka6 = Device.new
@@ -21,3 +26,11 @@ ka6.io = [
   
     
 ```
+
+## Patch shit and configure shit
+
+Define settings and connections, as simply as possible.
+
+## Display shit
+
+Render visual representation of your shit, as fanciful as possible.
