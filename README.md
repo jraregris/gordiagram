@@ -7,7 +7,10 @@ simple wire mess
 
 Define shit in text, as simply as possible
 
+
 ```ruby
+
+# first draft
 
 ka6 = Device.new
 ka6.name = "Komplete Audio 6"
