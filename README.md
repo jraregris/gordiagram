@@ -32,7 +32,7 @@ ka6.io = [
 
 ## Patch shit and configure shit
 
-Define settings and connections, as simply as possible.
+Define settings and connections between shit, as simply as possible.
 
 ## Display shit
 
