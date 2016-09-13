@@ -21,13 +21,24 @@ ka6.view = { back:  "https://images-na.ssl-images-amazon.com/images/I/819%2BXigL
 ka6.io = [
   { group: "Input 1",
     io:
-      { plug: Neutrik.♀ },
-      { plug: Pot.725, label: "Gain" },
-      { plug: Toggle, label: "█ Line / ▄ Inst" }
+      { io: Neutrik.♀ },
+      { config: Pot.725, label: "Gain" },
+      { config: Toggle, label: "█ Line / ▄ Inst" }
     }
   ]
   
-    
+  
+monito = Device.new
+monito.name = "Monito"
+monito.view = "http://meme.no/locomofon/images/diy/013_locomofon_monito01.jpg"
+
+monito.io = [ { io: Jack.♀, label: "In" },
+              { io: Jack.♀, label: "Out" },
+              { conf: Toggle, label: "Bypass" },
+              { conf: Pot.725, label: "Feed" },
+              { conf: Pot.725, label: "Spank" },
+              { conf: Pot.725, label: "Habitat" },
+              { conf: Pot.725, label: "Volume" } ]
 ```
 
 ## Patch shit and configure shit
