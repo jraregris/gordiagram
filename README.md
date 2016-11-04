@@ -1,4 +1,4 @@
-# gordiagram
+# gordiagram 🎘
 simple wire mess
 
 
