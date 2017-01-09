@@ -1,7 +1,7 @@
 digraph structs {
     graph [rankdir=LR, splines=true, ranksep=1];
     node [shape=record];
-    
+       
 subgraph cluster_rack {
     label="rack";
     node [width=0];
@@ -43,7 +43,7 @@ subgraph cluster_rack {
       \r|<15> 15
       \r|<16> 16
       \r"];
-      
+           
     rack_in:1 -> rack_out:1; // SO
     rack_in:2 -> rack_out:2; // HE
     rack_in:3 -> rack_out:3; // HA
@@ -67,7 +67,7 @@ subgraph cluster_mixer {
     \l|<8> 8:\l"];
     
     mixer_out [label="out|<1> 1|<2> 2"];
-                           
+           
     mixer_in:1,
     mixer_in:2,
     mixer_in:3,
@@ -76,11 +76,16 @@ subgraph cluster_mixer {
     mixer_in:6,
     mixer_in:7,
     mixer_in:8
-    -> mixer_out:1, mixer_out:2;
+    -> mixer_out:1, mixer_out:2 [style=dashed, arrowhead=empty];
 }
     rack_out:1 -> mixer_in:1;
     rack_out:2 -> mixer_in:2;
     rack_out:3 -> mixer_in:3;
+    rack_out:4 -> mixer_in:4;
+    rack_out:5 -> mixer_in:5;
+    rack_out:6 -> mixer_in:6;
+    rack_out:7 -> mixer_in:7;
+    
     
     
     "Sondre/Ståle" -> rack_in:1
@@ -89,6 +94,6 @@ subgraph cluster_mixer {
     "Andreas" -> rack_in:4
     "Ruben" -> rack_in:5
     
-    mixer_out:1 -> PA_L
-    mixer_out:2 -> PA_R
+    mixer_out:1 -> PA_L;
+    mixer_out:2 -> PA_R;
 }
