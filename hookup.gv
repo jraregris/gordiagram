@@ -4,15 +4,45 @@ digraph structs {
     
 subgraph cluster_rack {
     label="rack";
-    
+    node [width=0];
 
-    rack_in [label="in|<1> 1|<2> 2|<3> 3|<4> 4|<5> 5|<6> 6|<7> 7|<8> 8|<9> 9
-                      |<10> 10|<11> 11|<12> 12|<13> 13|<14> 14|<15> 15|<16> 16"];
-
+    rack_in [label="in
+      |<1> 1
+      \l|<2> 2
+      \l|<3> 3
+      \l|<4> 4
+      \l|<5> 5
+      \l|<6> 6
+      \l|<7> 7
+      \l|<8> 8
+      \l|<9> 9
+      \l|<10> 10
+      \l|<11> 11
+      \l|<12> 12
+      \l|<13> 13
+      \l|<14> 14
+      \l|<15> 15
+      \l|<16> 16
+      \l"];
     
-    
-    rack_out [label="out|<1> 1|<2> 2|<3> 3|<4> 4|<5> 5|<6> 6|<7> 7|<8> 8|<9> 9
-                      |<10> 10|<11> 11|<12> 12|<13> 13|<14> 14|<15> 15|<16> 16"];
+    rack_out [label="out
+      |<1> 1
+      \r|<2> 2
+      \r|<3> 3
+      \r|<4> 4
+      \r|<5> 5
+      \r|<6> 6
+      \r|<7> 7
+      \r|<8> 8
+      \r|<9> 9
+      \r|<10> 10
+      \r|<11> 11
+      \r|<12> 12
+      \r|<13> 13
+      \r|<14> 14
+      \r|<15> 15
+      \r|<16> 16
+      \r"];
       
     rack_in:1 -> rack_out:1; // SO
     rack_in:2 -> rack_out:2; // HE
@@ -21,5 +51,44 @@ subgraph cluster_rack {
     rack_in:1 -> rack_out:5; // ST
     rack_in:3 -> rack_out:6; // OD
     rack_in:5 -> rack_out:7; // S
-}   
+}
+
+subgraph cluster_mixer {
+  label="mixer";
+    
+    mixer_in [label="in\
+    |<1> 1: SONDRE
+    \l|<2> 2: HELGE
+    \l|<3> 3: HALLVAR 
+    \l|<4> 4: ANDREAS
+    \l|<5> 5: STÅLE
+    \l|<6> 6: ODDMUND
+    \l|<7> 7: RUBEN
+    \l|<8> 8:\l"];
+    
+    mixer_out [label="out|<1> 1|<2> 2"];
+                           
+    mixer_in:1,
+    mixer_in:2,
+    mixer_in:3,
+    mixer_in:4,
+    mixer_in:5,
+    mixer_in:6,
+    mixer_in:7,
+    mixer_in:8
+    -> mixer_out:1, mixer_out:2;
+}
+    rack_out:1 -> mixer_in:1;
+    rack_out:2 -> mixer_in:2;
+    rack_out:3 -> mixer_in:3;
+    
+    
+    "Sondre/Ståle" -> rack_in:1
+    "Helge" -> rack_in:2
+    "Hallvar/Oddmund" -> rack_in:3
+    "Andreas" -> rack_in:4
+    "Ruben" -> rack_in:5
+    
+    mixer_out:1 -> PA_L
+    mixer_out:2 -> PA_R
 }
