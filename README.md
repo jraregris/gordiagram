@@ -49,6 +49,10 @@ Define settings and connections between shit, as simply as possible.
 
 Render visual representation of your shit, as fanciful as possible.
 
+### Guidelines
+
+http://www.usitt.org/assets/1/27/Sound_Guildelines_2008.pdf
+
 ### Visual inspiration
 
 (hotlinks)
