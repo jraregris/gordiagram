@@ -1,99 +1,69 @@
 digraph structs {
-    graph [rankdir=LR, splines=true, ranksep=1];
-    node [shape=record];
-       
-subgraph cluster_rack {
-    label="rack";
-    node [width=0];
+	graph [rankdir=none, splines=false, ranksep=1];
+	node [shape=record];
 
-    rack_in [label="in
-      |<1> 1
-      \l|<2> 2
-      \l|<3> 3
-      \l|<4> 4
-      \l|<5> 5
-      \l|<6> 6
-      \l|<7> 7
-      \l|<8> 8
-      \l|<9> 9
-      \l|<10> 10
-      \l|<11> 11
-      \l|<12> 12
-      \l|<13> 13
-      \l|<14> 14
-      \l|<15> 15
-      \l|<16> 16
-      \l"];
-    
-    rack_out [label="out
-      |<1> 1
-      \r|<2> 2
-      \r|<3> 3
-      \r|<4> 4
-      \r|<5> 5
-      \r|<6> 6
-      \r|<7> 7
-      \r|<8> 8
-      \r|<9> 9
-      \r|<10> 10
-      \r|<11> 11
-      \r|<12> 12
-      \r|<13> 13
-      \r|<14> 14
-      \r|<15> 15
-      \r|<16> 16
-      \r"];
-           
-    rack_in:1 -> rack_out:1; // SO
-    rack_in:2 -> rack_out:2; // HE
-    rack_in:3 -> rack_out:3; // HA
-    rack_in:4 -> rack_out:4; // A
-    rack_in:1 -> rack_out:5; // ST
-    rack_in:3 -> rack_out:6; // OD
-    rack_in:5 -> rack_out:7; // S
-}
+	vokal_hepx[label="<helge>Helge|<andreas>Andreas|<hallvar>Hallvar|<sondre>Sondre"];
+	vokal_jp[label="<stale>Ståle|<oddmund>Oddmund|<ruben>Ruben"];
+	gitar [label="<gretsch>Gretsch|<taco>Tacocaster"];
+	trommer [label="<oh_l>OH L|<oh_r>OH R|<tam_gulv>Tam gulv|<tam_2>Tam 2|<tam_1>Tam 1|<skarp>Skarp|<bass>Bass"];
 
-subgraph cluster_mixer {
-  label="mixer";
-    
-    mixer_in [label="in\
-    |<1> 1: SONDRE
-    \l|<2> 2: HELGE
-    \l|<3> 3: HALLVAR 
-    \l|<4> 4: ANDREAS
-    \l|<5> 5: STÅLE
-    \l|<6> 6: ODDMUND
-    \l|<7> 7: RUBEN
-    \l|<8> 8:\l"];
-    
-    mixer_out [label="out|<1> 1|<2> 2"];
-           
-    mixer_in:1,
-    mixer_in:2,
-    mixer_in:3,
-    mixer_in:4,
-    mixer_in:5,
-    mixer_in:6,
-    mixer_in:7,
-    mixer_in:8
-    -> mixer_out:1, mixer_out:2 [style=dashed, arrowhead=empty];
-}
-    rack_out:1 -> mixer_in:1;
-    rack_out:2 -> mixer_in:2;
-    rack_out:3 -> mixer_in:3;
-    rack_out:4 -> mixer_in:4;
-    rack_out:5 -> mixer_in:5;
-    rack_out:6 -> mixer_in:6;
-    rack_out:7 -> mixer_in:7;
-    
-    
-    
-    "Sondre/Ståle" -> rack_in:1
-    "Helge" -> rack_in:2
-    "Hallvar/Oddmund" -> rack_in:3
-    "Andreas" -> rack_in:4
-    "Ruben" -> rack_in:5
-    
-    mixer_out:1 -> PA_L;
-    mixer_out:2 -> PA_R;
+	subgraph cluster_multi {
+		label="multi";
+
+		multi [label="<3>3|<4>4|<5>5|<6>6|<7>7|<8>8|<10>10|<11>11|<12>12|<13>13|<14>14|<15>15|<16>16||<a>a|<b>b|<c>c|<d>d"];
+	}
+
+	subgraph cluster_rack {
+		label="rack";
+		subgraph cluster_scarlett {
+			label="scarlett";
+			scarlett_in [label="in|<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8||<adat>adat"];
+			scarlett_out [label="out|<adat>adat"];
+		}
+
+		subgraph cluster_octopre {
+			label="octopre";
+			octopre_in [label="in|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8||<adat>adat"];
+			octopre_out [label="out|<adat>adat"];
+		}
+	}
+
+	// Vokaler
+//vokal_jp:oddmund -> multi:4;
+//vokal_jp:stale -> multi:6;
+vokal_jp:ruben -> multi:7 -> scarlett_in:7;
+
+vokal_hepx:helge -> multi:3 -> scarlett_in:3;
+vokal_hepx:andreas -> multi:4 -> scarlett_in:4;
+vokal_hepx:hallvar -> multi:5 -> scarlett_in:5;
+vokal_hepx:sondre -> multi:6 -> scarlett_in:6;
+
+	   // Gitarer
+
+gitar:gretsch -> scarlett_in:1;
+gitar:taco -> scarlett_in:2;
+
+      // Trommer
+
+trommer:oh_l -> multi:10 -> octopre_in:2;
+trommer:oh_r -> multi:11 -> octopre_in:3;
+trommer:tam_gulv -> multi:12 -> octopre_in:4;
+trommer:tam_2 -> multi:13 -> octopre_in:5;
+trommer:tam_1 -> multi:14 -> octopre_in:6;
+trommer:skarp -> multi:15 -> octopre_in:7; 
+trommer:bass -> multi:16 -> octopre_in:8;
+
+// RACK
+
+octopre_out:adat -> scarlett_in:adat;
+scarlett_out:adat -> octopre_in:adat;
+
+	/*
+mixer_out:1 -> multi:a -> PA_L;
+mixer_out:2 -> multi:b -> PA_R;
+	 */
+
+multi:a -> PA_L;
+multi:b -> PA_R;
+
 }
