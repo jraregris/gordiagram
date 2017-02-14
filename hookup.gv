@@ -1,36 +1,62 @@
 digraph structs {
-	graph [rankdir=none, splines=false, ranksep=1];
+	graph [rankdir=LR, splines=true, ranksep=2];
 	node [shape=record];
 
 	vokal_hepx[label="<helge>Helge|<andreas>Andreas|<hallvar>Hallvar|<sondre>Sondre"];
-	vokal_jp[label="<stale>Ståle|<oddmund>Oddmund|<ruben>Ruben"];
+	vokal_jp[label="<oddmund>Oddmund|<stale>Ståle|<ruben>Ruben"];
 	gitar [label="<gretsch>Gretsch|<taco>Tacocaster"];
 	trommer [label="<oh_l>OH L|<oh_r>OH R|<tam_gulv>Tam gulv|<tam_2>Tam 2|<tam_1>Tam 1|<skarp>Skarp|<bass>Bass"];
 
-	subgraph cluster_multi {
+	subgraph cluster_multi_in {
+		color=none;
 		label="multi";
-
-		multi [label="<3>3|<4>4|<5>5|<6>6|<7>7|<8>8|<10>10|<11>11|<12>12|<13>13|<14>14|<15>15|<16>16||<a>a|<b>b|<c>c|<d>d"];
+		multi [label="<3>3|<4>4|<5>5|<6>6|<7>7|<8>8|<10>10|<11>11|<12>12|<13>13|<14>14|<15>15|<16>16"];
 	}
 
-	subgraph cluster_rack {
-		label="rack";
-		subgraph cluster_scarlett {
-			label="scarlett";
-			scarlett_in [label="in|<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8||<adat>adat"];
-			scarlett_out [label="out|<adat>adat"];
-		}
+	subgraph cluster_multi_out {
+		color=none;
+		label="multi";
+		multi_out [label="<a>a|<b>b|<c>c|<d>d"];
+	}
 
-		subgraph cluster_octopre {
-			label="octopre";
-			octopre_in [label="in|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8||<adat>adat"];
-			octopre_out [label="out|<adat>adat"];
-		}
+	subgraph cluster_scarlett {
+		ranksep=1;
+		color=grey;
+		label="scarlett";
+		pc [label="<l>PC L|<r> PC R"];
+		scarlett_in [label="<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8|<adat>adat"];
+		scarlett_out [label="<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8|<9>9|<10>10|<adat>adat"];
+
+		{ rank=source; scarlett_in; pc;}
+		{ rank=sink; scarlett_out; }
+	}
+
+	subgraph cluster_octopre {
+		ranksep=1;
+		color=grey;
+		label="octopre";
+		octopre_in [label="<adat>adat|<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8"];
+		octopre_out [label="<adat>adat|<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7|<8>8"];
+
+		{ rank=source; octopre_in; }
+		{ rank=sink; octopre_out; }
+	}
+
+
+	subgraph cluster_mixer {
+		color=grey;
+		label="mixer";
+		mixer_in [label="<1>1 HA|<2>2 SO|<3>3 HE|<4>4 AN|<5>5 OD|<6>6
+		ST|<7>7 RU|<8>8|<910>9/10|<1112>11/12|<1314>13/14|<1516>15/16"];
+		mixer_out [label="<1>1|<2>2"];
+
+		{ rank=source; mixer_in; }
+		{ rank=sink; mixer_out; }
 	}
 
 	// Vokaler
-//vokal_jp:oddmund -> multi:4;
-//vokal_jp:stale -> multi:6;
+vokal_jp:oddmund -> multi:5;
+vokal_jp:stale -> multi:6;
 vokal_jp:ruben -> multi:7 -> scarlett_in:7;
 
 vokal_hepx:helge -> multi:3 -> scarlett_in:3;
@@ -53,17 +79,40 @@ trommer:tam_1 -> multi:14 -> octopre_in:6;
 trommer:skarp -> multi:15 -> octopre_in:7; 
 trommer:bass -> multi:16 -> octopre_in:8;
 
-// RACK
+	// RACK
 
 octopre_out:adat -> scarlett_in:adat;
 scarlett_out:adat -> octopre_in:adat;
 
-	/*
-mixer_out:1 -> multi:a -> PA_L;
-mixer_out:2 -> multi:b -> PA_R;
-	 */
+scarlett_out:1 -> mixer_in:1516;
+scarlett_out:2 -> mixer_in:1516;
 
-multi:a -> PA_L;
-multi:b -> PA_R;
+scarlett_out:3 -> mixer_in:3;
+scarlett_out:4 -> mixer_in:4;
+scarlett_out:5 -> mixer_in:5;
+scarlett_out:6 -> mixer_in:6;
+scarlett_out:7 -> mixer_in:7;
+
+scarlett_out:8 -> mixer_in:1;
+scarlett_out:9 -> mixer_in:2;
+
+
+mixer_out:1 -> multi_out:a -> PA_L;
+mixer_out:2 -> multi_out:b -> PA_R;
+
+// rack route
+
+pc:l -> scarlett_out:1 [color=grey, arrowhead=none];
+pc:r -> scarlett_out:2 [color=grey, arrowhead=none];
+
+scarlett_in:3 -> scarlett_out:3 [color=grey, arrowhead=none];
+scarlett_in:4 -> scarlett_out:4 [color=grey, arrowhead=none];
+scarlett_in:5 -> scarlett_out:5 [color=grey, arrowhead=none];
+scarlett_in:6 -> scarlett_out:6 [color=grey, arrowhead=none];
+scarlett_in:7 -> scarlett_out:7 [color=grey, arrowhead=none];
+
+
+scarlett_in:5 -> scarlett_out:8 [color=grey, arrowhead=none];
+scarlett_in:6 -> scarlett_out:9 [color=grey, arrowhead=none];
 
 }
